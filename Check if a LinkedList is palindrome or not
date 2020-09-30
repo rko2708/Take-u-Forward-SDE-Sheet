@@ -1,0 +1,77 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+class Node
+{
+	public: 
+		int data;
+		Node* next;
+};
+
+Node* new_node(int val)
+{
+	Node* newnode = new Node();
+	newnode -> data = val;
+	newnode -> next = NULL;
+	return newnode;
+}
+
+void push(Node** head, int val)
+{
+	Node* newnode = new_node(val);
+	newnode -> next = *head;
+	*head = newnode;
+}
+
+void print_list(Node* head)
+{
+	if(head == NULL)
+	{
+		cout << "List is empty!!!\nList is a palindrome";
+		return;
+	}
+	while(head != NULL)
+	{
+		cout << head -> data;
+		if(head -> next != NULL) cout << "->";
+		head = head -> next;
+	}
+	cout << '\n';
+}
+
+bool check_for_palindrome(Node* head)
+{
+	if(head == NULL or head -> next == NULL) return true;
+	stack<int> s;
+	Node* temp_head = head;
+	while(head != NULL)
+	{
+		s.push(head->data);
+		head = head -> next;
+	}
+	head = temp_head;
+	while(!s.empty())
+	{
+		if(s.top() != head->data) return false;
+		head = head -> next;
+		s.pop();
+	}
+	return true;
+}
+
+int main() {
+	// your code goes here
+	Node* head = NULL;
+	push(&head, 8);
+	push(&head, 4);
+	push(&head, 2);
+	push(&head, 4);
+	push(&head, 8);
+	
+	print_list(head);
+	
+	if(check_for_palindrome(head)) cout << "Given list is a palindrome!!!";
+	else cout << "Given list is not a palindrome!!!";
+	return 0;
+}

@@ -1,0 +1,23 @@
+#include <iostream>
+#include <set>
+using namespace std;
+
+int main() {
+	// your code goes here
+	int n; cin >> n;
+	int k; cin >> k;
+	multiset<int> s;
+	int a[n];
+	for(int i=0;i<n;i++) {
+		cin >> a[i];
+		if(i < k) s.insert(a[i]);
+	}
+	for(int i=k;i<n;i++) 
+	{
+		cout << *s.rbegin() << ' ';
+		s.erase(s.find(a[i-k]));
+		s.insert(a[i]);
+	}
+	cout << *s.rbegin();
+	return 0;
+}

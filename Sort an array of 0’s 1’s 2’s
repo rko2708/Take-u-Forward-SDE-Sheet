@@ -27,7 +27,7 @@ void solve_using_method_3(int a[], int n)
 	int lo = 0, hi = n - 1, mid = 0;
 	while(hi >= mid)
 	{
-		if(a[mid] == 0) lo++, mid++;
+		if(a[mid] == 0) swap(a[lo], a[mid]), lo++, mid++;
 		else if(a[mid] == 1) mid++;
 		else swap(a[mid], a[hi]), hi--;
 	}

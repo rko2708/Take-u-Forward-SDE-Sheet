@@ -1,0 +1,48 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+void solve_using_method_1(int a[], int n)
+{
+	sort(a, a+n);
+	for(int i=0;i<n;i++) cout << a[i] << ' ';
+}
+
+void solve_using_method_2(int a[], int n)
+{
+	int one = 0, two = 0, zero = 0;
+	for(int i=0;i<n;i++) 
+	{
+		if(a[i] == 0) zero++;
+		if(a[i] == 1) one++;
+		if(a[i] == 2) two++;
+	}
+	while(zero--) cout << 0 << ' ';
+	while(one--) cout << 1 << ' ';
+	while(two--) cout << 2 << ' ';
+}
+
+void solve_using_method_3(int a[], int n)
+{
+	int lo = 0, hi = n - 1, mid = 0;
+	while(hi >= mid)
+	{
+		if(a[mid] == 0) lo++, mid++;
+		else if(a[mid] == 1) mid++;
+		else swap(a[mid], a[hi]), hi--;
+	}
+	for(int i=0;i<n;i++) cout << a[i] << ' ';
+}
+
+int main() {
+	// your code goes here
+	int n; cin >> n;
+	int a[n];
+	for(int i=0;i<n;i++) cin >> a[i];
+	solve_using_method_1(a, n);
+	cout << '\n';
+	solve_using_method_2(a, n);
+	cout << '\n';
+	solve_using_method_3(a, n);
+	return 0;
+}

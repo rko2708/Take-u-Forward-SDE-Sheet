@@ -1,0 +1,28 @@
+#include <iostream>
+#include <cmath>
+#include <algorithm>
+#include <climits>
+using namespace std;
+
+// best time to buy and sell stock
+// single transaction allowed
+
+int main() {
+	// your code goes here
+	
+	int no_of_days; cin >> no_of_days;
+	
+	int prices[no_of_days];
+	for(int i=0;i<no_of_days;i++) cin >> prices[i];
+	
+	int profit = 0, buy = INT_MAX;
+	for(int i=0;i<no_of_days;i++)
+	{
+		buy = min(buy, prices[i]);
+		profit = max(prices[i] - buy, profit);
+	}
+	
+	cout << profit;
+	
+	return 0;
+}

@@ -1,0 +1,66 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long int
+#define double long double 
+const double pii = acos(-1.0);
+void fun()
+{
+	#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+	#endif
+}
+#define rko ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+const int N = 3e5 + 7;
+const int mod = 1e9 + 7;
+const int INF = 1e18 + 7;
+
+int merge(int a[], int b[], int left, int mid, int right)
+{
+	int i = left, j = mid, idx = left, ans = 0;
+	while(i <= mid - 1 and j <= right)
+	{
+		if(a[i] <= a[j])
+		{
+			b[idx++] = a[i++];
+		}
+		else
+		{
+			b[idx++] = a[j++];
+			ans += (mid - i);
+		}
+	}
+	while(i <= mid - 1) b[idx++] = a[i++];
+	while(j <= right) b[idx++] = a[j++];
+	for(int i=left;i<=right;i++) a[i] = b[i];
+	return ans;
+}
+
+int solve(int a[], int b[], int left, int right)
+{
+	int ans = 0;
+	if(left < right)
+	{
+		int mid = (left + right) / 2;
+		ans += solve(a, b, left, mid);
+		ans += solve(a, b, mid + 1, right);
+		ans += merge(a, b, left, mid + 1, right);
+	}
+	return ans;
+}
+
+signed main() 
+{
+	rko;
+	fun();
+	int tests = 1; //cin>>tests;
+	while(tests--)
+	{
+		int n; cin >> n;
+		int temp[n+1], p[n+1];
+		for(int i=1;i<=n;i++) cin >> p[i];
+		cout << solve(p, temp, 1, n);
+	}	
+	cerr << "time elapsed : " << 1.0 * clock() / CLOCKS_PER_SEC << " sec \n";
+	return 0;
+}

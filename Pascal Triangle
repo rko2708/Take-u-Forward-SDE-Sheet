@@ -1,0 +1,27 @@
+// function to generate pascal's triangle
+
+
+vector<vector<int>> generate(int n) {
+        vector<vector<int> > v;
+        if(n == 0) return v;
+        vector<int> temp;
+        temp.push_back(1);
+        v.push_back(temp);
+        if(n == 1) return v;
+        temp.push_back(1);
+        v.push_back(temp);
+        if(n == 2) return v;
+        for(int i=3;i<=n;i++)
+        {
+            temp.clear();
+            temp.push_back(1);
+            vector<int> vv = v.back();
+            for(int j=0;j<vv.size()-1;j++)
+            {
+                temp.push_back(vv[j] + vv[j+1]);
+            }
+            temp.push_back(1);
+            v.push_back(temp);
+        }
+        return v;
+    }

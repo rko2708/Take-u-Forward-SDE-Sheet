@@ -1,0 +1,84 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Node
+{
+	public:
+		int data;
+		Node *left, *right;
+};
+
+Node* newNode(int val)
+{
+	Node* new_node = new Node();
+	new_node -> data = val;
+	new_node -> left = new_node -> right = NULL;
+	return new_node;
+}
+
+
+// return true if given tree is mirror of itself
+// root1 and root2 both are root 
+bool is_mirror(Node* root1, Node* root2)
+{
+	if(root1 == NULL and root2 == NULL) return true;
+	
+	// if both root1 and root2 exist then their data should be equal and same must hold for left and right subtrees
+	if(root1 and root2 and root1 -> data == root2 -> data) 
+	{
+		return is_mirror(root1 -> left, root2 -> right) and is_mirror(root1 -> right, root2 -> left);
+	}
+	
+	return false;
+	
+}
+
+bool isSymmetric(Node* root)
+{
+	return is_mirror(root, root);
+}
+
+
+// iterative 
+bool is_ok(Node* root)
+{
+	if(root == NULL) return true;
+	
+  // we can use stack or queue 
+  // we just need to make sure that the elements which we are inserting, we should recover them in pairs
+  // at each level, the data values should be palindrome
+  // for this we can check that the value of left child is equal to right child or not
+	stack<Node*> s;
+	s.push(root);
+	s.push(root);
+	
+	while(!s.empty())
+	{
+		Node* lefty = s.top();
+		s.pop();
+		Node* righty = s.top();
+		s.pop();
+		if(lefty -> data != righty -> data) return false; 
+		
+		if(lefty -> left and righty -> right) s.push(lefty -> left), s.push(righty -> right);
+		else if(lefty -> left or righty -> right) return false;
+		
+		if(lefty -> right and righty -> left) s.push(lefty -> right), s.push(righty -> left);
+		else if(lefty -> right or righty -> left) return false;
+	}
+	return true;
+}
+
+int main() {
+	// your code goes here
+	Node *root        = newNode(1); 
+    root->left        = newNode(2); 
+    root->right       = newNode(2); 
+    root->left->left  = newNode(3); 
+    root->left->right = newNode(4); 
+    root->right->left  = newNode(4); 
+    root->right->right = newNode(3); 
+    cout << is_ok(root) << '\n';
+    cout << isSymmetric(root); 
+	return 0;
+}
